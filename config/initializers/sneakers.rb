@@ -3,5 +3,5 @@
 require 'sneakers'
 
 # TODO: change your connection configs
-Sneakers.configure({})
+Sneakers.configure connection: Bunny.new(host: 'rabbitmq')
 Sneakers.logger.level = Logger::INFO

@@ -29,7 +29,7 @@ RUN bundle check || bundle install
 RUN rails webpacker:install
 RUN rails webpacker:install:react
 COPY . ./
-RUN chmod +x ./entrypoints/docker-entrypoint.sh && chmod +x ./init.sql
+RUN chmod +x ./entrypoints/docker-entrypoint.sh && chmod +x ./init.sql && chmod +x ./entrypoints/sneaker-entrypoint.sh
 
 ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]
 
