@@ -6,7 +6,7 @@ require 'sneakers'
 class JobsWorker
   include Sneakers::Worker
   from_queue :search
-  EXPIRE_CACHE = 10
+  EXPIRE_CACHE = 5
   CACHE_JOB_KEY = 'cached_job_search'
   STORE_LIMIT = 10_000
 
