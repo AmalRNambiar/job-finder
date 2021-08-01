@@ -13,16 +13,16 @@ export default class Search extends React.Component {
   };
 
   onChange = async (e) => {
-    const self = this;
 
-    if (self.state.typingTimeout) {
-      clearTimeout(self.state.typingTimeout);
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
     }
 
-    self.setState({
+    this.setState({
       searchKey: e.target.value,
       typing: false,
       loading: true,
+      status: 'searching',
       results: [],
       typingTimeout: setTimeout(this.search, 1500)
     });
@@ -49,13 +49,12 @@ export default class Search extends React.Component {
       }
     }
     catch (e) {
-      this.setState({ loading: false, results: [] })
+      this.setState({ loading: false, results: [], status: 'error' })
     }
   }
 
   render() {
     const { loading, results, status } = this.state;
-    console.log(this.state)
     return (
       <div className="ui raised segment no padding">
         <form method="GET" action="search">
@@ -65,7 +64,7 @@ export default class Search extends React.Component {
               <i className="search icon"></i>
             </button>
           </div>
-          {results.length > 0 || loading ? <SearchResultList results={results} loading={loading} status={status} /> : null}
+          {(results.length > 0 || loading) ? <SearchResultList results={results} loading={loading} status={status} /> : null}
         </form>
       </div>
     );

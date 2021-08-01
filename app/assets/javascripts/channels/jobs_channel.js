@@ -27,8 +27,8 @@ App.messages = App.cable.subscriptions.create({
 
   autoCompleteNoData() {
     return `
-      <div class=""ui active inverted dimmer">
-        <div class="ui no_data_text">No records were found that match your query.</div>
+      <div class="ui active inverted dimmer">
+        <div class="ui text">No records were found that match your query.</div>
       </div>
     `
   },
