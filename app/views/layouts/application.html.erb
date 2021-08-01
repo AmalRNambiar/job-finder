@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JobFinder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" id="room" room_id=<%= session.id %>>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="ui container">
+      <div class="ui stackable menu">
+        <a class="header item" href="/">
+          <img src="/logo.png">
+          <span style="margin-left: 8px;">JobFinder</span>
+        </a>
+        <a class="item" href="/">Home</a>
+        <a class="disabled item">Careers</a>
+        <a class="disabled item">Companies</a>
+        <div class="right menu">
+          <div class="item">
+            <div class="ui secondary disabled button">Log In</div>
+          </div>
+          <div class="item">
+            <div class="ui primary disabled button">Sign Up</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui container content">
+      <%= yield %>
+    </div>
+  </body>
+</html>

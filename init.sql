@@ -1,0 +1,3 @@
+CREATE USER postgres;
+ALTER USER postgres WITH SUPERUSER;
+ALTER USER postgres WITH PASSWORD 'postgres';

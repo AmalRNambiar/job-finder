@@ -1,0 +1,24 @@
+<h1 class="header"><%= name %></h1>
+<div class="ui divider"></div>
+<div class="ui link cards app-cards">
+  <% job_list.each do |job| %>
+    <a class="card" href="<%= job_path(job["guid"]) %>">
+      <div class="image">
+        <img src="<%= job_image(job["title"]) %>">
+      </div>
+      <div class="content">
+        <div class="header"><%= job["title"] %></div>
+        <div class="meta"><%= job["author"]["name"] %></div>
+        <div class="description"><%= truncate extract_text(job["description"]), length: 200, seperator: /\w+/ %></div>
+      </div>
+      <div class="extra content">
+        <span class="right floated">
+          <i class="star icon"></i> <%= rand(5) %>
+        </span>
+        <span>
+          Applicants: <%= number_to_human rand(100) %>
+        </span>
+      </div>
+    </a>
+  <% end %>
+</div>

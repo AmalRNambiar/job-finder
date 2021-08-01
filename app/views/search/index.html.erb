@@ -1,0 +1,36 @@
+<div class="ui raised segment">
+  <h1 class="ui header" id="total_results"><%= params[:query] %> (<%= @jobs&.size.to_i %> results)</h1>  
+  <div class="ui divider"></div>
+  <div class="ui divided link items" id="result_page">
+    <% if  @jobs.blank? %>
+      <div class="ui active inverted dimmer" style='min-height: 400px;'>
+        <div class="ui text loader">Request is being processed and results will be available shortly.</div>
+      </div>
+    <% else %>
+      <% @jobs.each do |job| %>
+        <a class="item" href="<%= job_path(job["guid"]) %>">
+          <div class="small image">
+            <img src="<%= job_image(job["title"]) %>">
+          </div>
+          <div class="content">
+            <div class="header"><%= job["title"] %></div>
+            <div class="meta">
+              <span><%= job["author"]["name"] %></span>
+            </div>
+            <div class="description">
+              <p><%= truncate extract_text(job["description"]), length: 200, seperator: /\w+/ %></p>
+            </div>
+            <div class="extra">
+              <div class="ui right floated primary button">
+                View More
+                <i class="right chevron icon"></i>
+              </div>
+              <div class="ui label"><i class="green arrow alternate circle down outline icon"></i> <%= number_to_human rand(100) %> Applicants</div>
+              <div class="ui label"><i class="yellow star icon"></i> <%= rand(5) %> Rating</div>
+            </div>
+          </div>
+        </a>
+      <% end %>
+    <% end %>
+  </div>
+</div>

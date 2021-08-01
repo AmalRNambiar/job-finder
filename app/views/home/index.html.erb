@@ -1,0 +1,3 @@
+<%= react_component("Search") %>
+<%= render partial: "jobs/job_cards", locals: { name: "Trending Jobs", job_list: @trending_jobs } unless @trending_jobs.blank? %>
+<%= render partial: "jobs/job_cards", locals: { name: "Latest Jobs", job_list: @latest_jobs } unless @latest_jobs.blank? %>
