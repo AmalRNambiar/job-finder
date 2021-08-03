@@ -15,6 +15,6 @@ module JobsHelper
   def format_date(date)
     return 'Date not available' if date.blank?
 
-    Date.strptime(date, '%F')
+    date.strftime('%B %d, %Y %H:%M %p')
   end
 end

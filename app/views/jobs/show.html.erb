@@ -2,21 +2,21 @@
   <div class="ui items">
     <div class="item">
       <div class="image">
-        <img src="<%= job_image(@job["title"]) %>">
+        <img src="<%= job_image(@job.title) %>">
       </div>
       <div class="content">
-        <h1 class="header"><%= @job["title"] %></h1>
+        <h1 class="header"><%= @job.title %></h1>
         <div class="meta">
-          <span class="cinema"><%= @job["author"]["name"] %></span>
+          <span class="cinema"><%= @job.author %></span>
         </div>
         <div class="meta">
           <span class="version">Applicants <%= rand(100) %></span>
         </div>
         <div class="meta">
-          <span class="release">Released <%= format_date @job['updated'] %></span>
+          <span class="release">Published <%= format_date @job.published_at %></span>
         </div>
         <div class="bottom aligned content">
-          <a class="ui primary button" href="<%= @job['link'] %>">Apply</a>
+          <a class="ui primary button" href="<%= @job.link %>">Apply</a>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
   <div class="ui divider"></div>
   <h2 class="header">Description</h2>
   <div>
-    <p><%= @job['description'].html_safe %></p>
+    <p><%= @job.description.html_safe %></p>
   </div>
   <div class="ui divider"></div>
 </div>

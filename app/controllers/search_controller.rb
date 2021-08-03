@@ -7,7 +7,7 @@ class SearchController < ApplicationController
     # check in cached jobs
     cached_job_ids = Job.search_cache(params[:query])
     if cached_job_ids.present?
-      @jobs = Job.where(ids: cached_job_ids)
+      @jobs = Job.where(guid: cached_job_ids)
     else
       SearchJob.perform_later(key: params[:query], user_id: @user_id)
     end

@@ -3,6 +3,6 @@
 class JobsController < ApplicationController
   # GET /jobs/:id
   def show
-    @job = Job.find_by(id: params[:id])
+    @job = Job.find_by(guid: params[:id])
   end
 end

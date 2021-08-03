@@ -8,17 +8,17 @@
       </div>
     <% else %>
       <% @jobs.each do |job| %>
-        <a class="item" href="<%= job_path(job["guid"]) %>">
+        <a class="item" href="<%= job_path(job.guid) %>">
           <div class="small image">
-            <img src="<%= job_image(job["title"]) %>">
+            <img src="<%= job_image(job.title) %>">
           </div>
           <div class="content">
-            <div class="header"><%= job["title"] %></div>
+            <div class="header"><%= job.title %></div>
             <div class="meta">
-              <span><%= job["author"]["name"] %></span>
+              <span><%= job.author["name"] %></span>
             </div>
             <div class="description">
-              <p><%= truncate extract_text(job["description"]), length: 200, seperator: /\w+/ %></p>
+              <p><%= truncate extract_text(job.description), length: 200, seperator: /\w+/ %></p>
             </div>
             <div class="extra">
               <div class="ui right floated primary button">

@@ -2,6 +2,6 @@
 
 class JobsChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "jobs_#{params[:room_id]}"
+    stream_from "jobs_#{current_user}"
   end
 end

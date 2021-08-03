@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
 
   # set unique identifier to user
   def set_user_id
-    @user_id = session.id.to_s
+    @user_id = cookies.encrypted[:current_user] ||= session.id.to_s
   end
 end

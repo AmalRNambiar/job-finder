@@ -5,11 +5,42 @@ import SearchResultList from './SearchResultList';
 export default class Search extends React.Component {
   state = {
     searchKey: "",
-    loading: false,
-    status: "",
+    status: "idle",
     results: [],
     typing: false,
     typingTimeout: 0
+  };
+
+  componentDidMount = async () => {
+    this.createWebsocketConnection('ws://localhost:3000/cable')
+  };
+
+  createWebsocketConnection = (WDS_SOCKET_PATH) => {
+    let socket = new WebSocket(WDS_SOCKET_PATH);
+    let self = this;
+    socket.onopen = function (event) {
+      const msg = {
+        command: "subscribe",
+        identifier: JSON.stringify({
+          channel: "JobsChannel"
+        })
+      };
+      socket.send(JSON.stringify(msg));
+    };
+    socket.onclose = function (event) {
+      console.log("WebSocket is closed.");
+    };
+    socket.onmessage = function (event) {
+      const response = JSON.parse(event.data);
+      if (response.message && response.message.jobs) {
+        self.setState({ results: response.message.jobs, status: response.message.jobs == 0 ? 'nodata' : 'completed' })
+      } else if (response.type != 'ping') {
+        self.setState({ results: [], status: 'idle' })
+      }
+    };
+    socket.onerror = function (error) {
+      console.log("WebSocket Error: " + error);
+    };
   };
 
   onChange = async (e) => {
@@ -21,8 +52,7 @@ export default class Search extends React.Component {
     this.setState({
       searchKey: e.target.value,
       typing: false,
-      loading: true,
-      status: 'searching',
+      status: 'loading',
       results: [],
       typingTimeout: setTimeout(this.search, 1500)
     });
@@ -30,31 +60,31 @@ export default class Search extends React.Component {
 
   search = async () => {
     try {
-      this.setState({ loading: true });
+      this.setState({ status: "loading", results: [] });
       const { searchKey } = this.state
       if (searchKey.length > 2) {
         const res = await axios.get('/search.json', { params: { query: searchKey } })
-        console.log(res.data.length)
         if (res.data.length == 0) {
-          this.setState({ loading: true, results: res.data, status: 'enqueued' })
+          this.setState({ results: [], status: 'enqueued' })
         } else {
-          this.setState({ loading: false, results: res.data, status: 'from_cache' })
+          this.setState({ results: res.data, status: 'completed' })
         }
       } else {
         if (searchKey.length == 0) {
-          this.setState({ loading: false, results: [], status: 'exit' });
+          this.setState({ results: [], status: 'idle' });
         } else {
-          this.setState({ loading: true, results: [], status: 'waiting' });
+          this.setState({ results: [], status: 'loading' });
         }
       }
     }
     catch (e) {
-      this.setState({ loading: false, results: [], status: 'error' })
+      this.setState({ results: [], status: 'idle' })
     }
   }
 
   render() {
-    const { loading, results, status } = this.state;
+    const { results, status } = this.state;
+
     return (
       <div className="ui raised segment no padding">
         <form method="GET" action="search">
@@ -64,7 +94,7 @@ export default class Search extends React.Component {
               <i className="search icon"></i>
             </button>
           </div>
-          {(results.length > 0 || loading) ? <SearchResultList results={results} loading={loading} status={status} /> : null}
+          {(status != 'idle') ? <SearchResultList results={results} status={status} /> : null}
         </form>
       </div>
     );

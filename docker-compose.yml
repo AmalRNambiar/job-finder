@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile
     depends_on:
+      - rabbitmq
       - database
       - redis
-      - rabbitmq
     ports:
       - "3000:3000"
     volumes:

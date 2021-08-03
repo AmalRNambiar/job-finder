@@ -2,14 +2,14 @@
 <div class="ui divider"></div>
 <div class="ui link cards app-cards">
   <% job_list.each do |job| %>
-    <a class="card" href="<%= job_path(job["guid"]) %>">
+    <a class="card" href="<%= job_path(job.guid) %>">
       <div class="image">
-        <img src="<%= job_image(job["title"]) %>">
+        <img src="<%= job_image(job.title) %>">
       </div>
       <div class="content">
-        <div class="header"><%= job["title"] %></div>
-        <div class="meta"><%= job["author"]["name"] %></div>
-        <div class="description"><%= truncate extract_text(job["description"]), length: 200, seperator: /\w+/ %></div>
+        <div class="header"><%= job.title %></div>
+        <div class="meta"><%= job.author %></div>
+        <div class="description"><%= truncate extract_text(job.description), length: 200, seperator: /\w+/ %></div>
       </div>
       <div class="extra content">
         <span class="right floated">
